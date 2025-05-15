@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="../css/style.css">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+<link rel="manifest" href="./site.webmanifest">
+</head>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body {
+    background: linear-gradient(45deg, #a06cd5, #d2b7e5);
+    height: 100vh;
+}
+h1 {
+    color: #fff;
+    text-align: start;
+    font-size: 2.5rem;
+    align-items: center;
+    display: flex;
+    justify-content: start;
+    margin: 20px 40px;
+}
+h1 img {
+    width: 50px;
+    height: 50px;
+}
+#btn {
+    background: #7251b5;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    margin: 20px 40px;
+}
+#btn img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+#btn:hover {
+    background: #5e3f8c;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.input-box{
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    min-height: 150px;
+    color: #000000;
+    background-color:#fff;
+    outline: none;
+    margin: 20px 40px;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+.input-box img{
+    width: 30px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.notes-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+</style>
+<body>
+     <section id="notes">
+         <h1>
+            <img src="../imgaes/notes.png" alt="">
+            Notes
+        </h1>
+        <Button id="btn" ><img src="../imgaes/edit.png" alt="">Create Notes</Button>
+        
+        <div class="notes-container">
+            <!-- <p contenteditable="true" class="input-box">
+
+                <img src="../imgaes/delete.png" alt="">
+            </p> -->
+        </div>
+     
+     </section>
+     <script >document.addEventListener('DOMContentLoaded', () => {
+    const notesContainer = document.querySelector('.notes-container');
+    const createBtn = document.getElementById('btn');
+
+    function updateStorage() {
+        localStorage.setItem('notes', notesContainer.innerHTML);
+    }
+
+    function createNoteElement() {
+        let inputBox = document.createElement("p");
+        let img = document.createElement("img");
+        inputBox.setAttribute("contenteditable", "true");
+        img.src = "../imgaes/delete.png";
+        img.className = "delete-button";
+        inputBox.className = "input-box";
+        inputBox.appendChild(img);
+        notesContainer.appendChild(inputBox);
+
+        img.addEventListener('click', (e) => {
+            e.target.parentNode.remove();
+            updateStorage();
+        });
+
+        inputBox.addEventListener('input', () => {
+            updateStorage();
+        });
+        return inputBox;
+    }
+
+    function showNotes() {
+        notesContainer.innerHTML = localStorage.getItem('notes') || '';
+        document.querySelectorAll('.input-box').forEach(note => {
+            const img = note.querySelector('.delete-button');
+            if (img) {
+                img.addEventListener('click', (e) => {
+                    e.target.parentNode.remove();
+                    updateStorage();
+                });
+            }
+            note.addEventListener('input', () => {
+                updateStorage();
+            });
+        });
+    }
+
+    createBtn.addEventListener('click', () => {
+        createNoteElement();
+        updateStorage(); // Save after creating
+    });
+
+    showNotes(); // Load notes on page load
+});</script>
+</body>
+</html>
