@@ -89,10 +89,10 @@ h1 img {
 <body>
      <section id="notes">
          <h1>
-            <img src="../imgaes/notes.png" alt="">
+            <img src="./notes.png" alt="">
             Notes
         </h1>
-        <Button id="btn" ><img src="../imgaes/edit.png" alt="">Create Notes</Button>
+        <Button id="btn" ><img src="./edit.png" alt="">Create Notes</Button>
         
         <div class="notes-container">
             <!-- <p contenteditable="true" class="input-box">
@@ -114,7 +114,7 @@ h1 img {
         let inputBox = document.createElement("p");
         let img = document.createElement("img");
         inputBox.setAttribute("contenteditable", "true");
-        img.src = "../imgaes/delete.png";
+        img.src = "./delete.png";
         img.className = "delete-button";
         inputBox.className = "input-box";
         inputBox.appendChild(img);
